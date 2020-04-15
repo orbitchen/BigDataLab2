@@ -1,6 +1,6 @@
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.FileSplit;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -17,10 +17,14 @@ public class Map extends Mapper<Object,Text,Text, Text>
     {
         FileSplit fs=(FileSplit) context.getInputSplit();
         String fileName=fs.getPath().getName();//文件名（作品名）
+        String[] fn=fileName.split("\\.");
+        fileName="";
+        for(int i=0;i<fn.length-2;i++)
+            fileName+=fn[i];
         StringTokenizer str=new StringTokenizer(value.toString());
-        for(;str.hasMoreTokens();)
-        {
+        while (str.hasMoreTokens()) {
             //词语;作品 出现次数
+            //System.err.println("Map:"+fileName);
             context.write(new Text(str.nextToken()+";"+fileName),new Text("1"));
         }
     }

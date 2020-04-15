@@ -28,15 +28,14 @@ public class Main  {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
 
-        String[] otherArgs=new GenericOptionsParser(conf,argv).getRemainingArgs();
-        if(otherArgs.length!=2)
+        if(argv.length!=3)
         {
             System.err.println("Usage: InvertedIndex <in> <out>");
             System.exit(2);
         }
 
-        FileInputFormat.addInputPath(job,new Path(otherArgs[0]));
-        FileOutputFormat.setOutputPath(job,new Path(otherArgs[1]));
+        FileInputFormat.addInputPath(job,new Path(argv[1]));
+        FileOutputFormat.setOutputPath(job,new Path(argv[2]));
         System.exit(job.waitForCompletion(true)?0:1);
     }
 }
