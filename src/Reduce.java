@@ -21,7 +21,7 @@ public class Reduce extends Reducer<Text,Text,Text,Text>
             //Thread.sleep(100);
             out+=v.toString()+";";
         }
-        int avg=appearn/bookn;
+        double avg=(double)appearn/(double)bookn;
         //String out= new String(avg + ",");//StringBuilder:IDE的建议
         out=String.valueOf(avg)+" "+out;
 //        for(Text v:value)
