@@ -12,6 +12,9 @@ public class Map extends Mapper<Object,Text,Text, Text>
     //Combiner 输出key：词语 输出value：作品;出现次数
     //reducer 输出key：词语 输出value：作品;出现次数 ...
 
+    private static Text word=new Text();
+    private static Text one=new Text("1");
+
     @Override
     public void map(Object key,Text value,Context context) throws IOException,InterruptedException
     {
@@ -24,8 +27,9 @@ public class Map extends Mapper<Object,Text,Text, Text>
         StringTokenizer str=new StringTokenizer(value.toString());
         while (str.hasMoreTokens()) {
             //词语;作品 出现次数
-            //System.err.println("Map:"+fileName);
-            context.write(new Text(str.nextToken()+";"+fileName),new Text("1"));
+            String a=str.nextToken();
+            word.set(a+" "+fileName);
+            context.write(word,one);
         }
     }
 }
