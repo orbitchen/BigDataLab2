@@ -2,6 +2,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class Reduce extends Reducer<Text,Text,Text,Text>
 {
@@ -25,13 +26,14 @@ public class Reduce extends Reducer<Text,Text,Text,Text>
             out.append(v.toString()).append(";");
         }
         double avg=(double)appearn/(double)bookn;
+        DecimalFormat d=new DecimalFormat("#.00");
         //String out= new String(avg + ",");//StringBuilder:IDE的建议
 //        for(Text v:value)
 //        {
 //            System.err.println("Reduce:"+v.toString());
 //            out+=v.toString()+";";
 //        }
-        index.set(avg+","+out.toString());
+        index.set(d.format(avg)+","+out.toString());
         context.write(key,index);
         out.delete(0,out.length());
     }
